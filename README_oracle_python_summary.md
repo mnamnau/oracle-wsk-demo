@@ -1,5 +1,5 @@
 
-# 🛠️ Postup práce
+# Postup práce
 
 - Založila jsem **Oracle Cloud DB (Free Tier)**, přes SQL Developer vytvořila tabulky, vložila dummy data a vytvořila view.
 - SQL skripty jsem uložila do **GitHub repozitáře**.
@@ -14,7 +14,7 @@
 - **Klíčový bod:** `cursor` mi ukázal konkrétní chybu a díky tomu jsem během 5 minut vyřešila to, co bez kurzoru nešlo hodinu odhalit.  
   `Cursor` „zná kontext“ a zobrazí skutečnou odpověď databáze.
 
-## ✅ Výsledek
+## Výsledek
 
 - Skript funguje s walletem v thick režimu
 - Připojení, dotaz i výpis dat fungují
