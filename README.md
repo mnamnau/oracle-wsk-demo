@@ -130,9 +130,9 @@ python execute_sql_file.py select_join_table.sql
 #### Mac/Linux Example
 
 ```bash
-# Use the prepared script
-chmod +x run_sql.sh
-./run_sql.sh select_join_table.sql
+
+. venv/bin/activate
+python ./execute_sql_file.py select_join_table.sql
 (1, 'Anna', 'Nováková', 'Databáze')
 (1, 'Anna', 'Nováková', 'Statistika')
 (2, 'Petr', 'Svoboda', 'Databáze')
