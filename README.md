@@ -1,4 +1,3 @@
-
 # Postup práce
 
 - Založila jsem **Oracle Cloud DB (Free Tier)**, přes SQL Developer vytvořila tabulky, vložila dummy data a vytvořila view.
@@ -11,7 +10,7 @@
     - Při použití thick režimu ale Oracle ignoroval moji složku s walletem → hledal `tnsnames.ora` ve výchozím `network/admin`
       - Vyřešeno pomocí `os.environ["TNS_ADMIN"] = wallet_location`
 
-- **Klíčový bod:** `cursor` mi ukázal konkrétní chybu a díky tomu jsem během 5 minut vyřešila to, co bez kurzoru nešlo hodinu odhalit.  
+- **Klíčový bod:** `cursor` mi ukázal konkrétní chybu a díky tomu jsem během vyřešila to, co bez kurzoru nešlo odhalit.  
   `Cursor` „zná kontext“ a zobrazí skutečnou odpověď databáze.
 
 ## Výsledek
