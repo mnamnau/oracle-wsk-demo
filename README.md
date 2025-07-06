@@ -93,12 +93,28 @@
   DB_PASSWORD="your_password"
   DB_WALLET_PASSWORD="your_wallet_password"
   ORACLE_CLIENT_PATH="path/to/instantclient"
+  WALLET_LOCATION="path/to/wallet"  # Optional, defaults to ./Wallet
+  TNS_NAME="your_tns_name"  # e.g., "dbname_high"
+  CONNECTION_TYPE="wallet"  # Optional, can be "wallet" or "basic"
+  ```
+  
+  For basic connection (without wallet), you can use these settings instead:
+  
+  ```bash
+  DB_USER="your_username"
+  DB_PASSWORD="your_password"
+  ORACLE_CLIENT_PATH="path/to/instantclient"
+  CONNECTION_TYPE="basic"
+  DB_HOSTNAME="your_db_hostname"
+  DB_PORT="1521"  # Optional, defaults to 1521
+  DB_SERVICE_NAME="your_service_name"
   ```
 
+## Usage
 
-### 5. Run SQL Queries
+### Run SQL Queries
 
-#### Windows
+#### Windows Example
 
 ```cmd
 # Activate the virtual environment
@@ -111,7 +127,7 @@ python execute_sql_file.py select_join_table.sql
 (2, 'Petr', 'Svoboda', 'Databáze')
 ```
 
-#### Mac/Linux
+#### Mac/Linux Example
 
 ```bash
 # Use the prepared script
@@ -120,3 +136,58 @@ chmod +x run_sql.sh
 (1, 'Anna', 'Nováková', 'Databáze')
 (1, 'Anna', 'Nováková', 'Statistika')
 (2, 'Petr', 'Svoboda', 'Databáze')
+```
+
+### Sync Database Views to Local Files
+
+You can synchronize all views from your Oracle database to local SQL files in a `views` directory:
+
+#### Windows Example
+
+```cmd
+# Activate the virtual environment
+venv\Scripts\activate
+
+# Run the script to pull all views
+python pull_views_to_sql_files.py
+Views will be saved to: C:\path\to\project\views
+Fetching list of views...
+Found 3 views. Extracting DDL for each view...
+Processing view: VIEW1
+Saved view DDL to: C:\path\to\project\views\view1.sql
+...
+View extraction complete!
+```
+
+#### Mac/Linux Example
+
+```bash
+# Activate the virtual environment
+source venv/bin/activate
+
+# Run the script to pull all views
+python3 pull_views_to_sql_files.py
+Views will be saved to: /path/to/project/views
+Fetching list of views...
+Found 3 views. Extracting DDL for each view...
+Processing view: VIEW1
+Saved view DDL to: /path/to/project/views/view1.sql
+...
+View extraction complete!
+```
+
+### Running Scripts from Different Directories
+
+All scripts are designed to work from any directory. They will:
+
+1. Load the `.env` file from the current working directory
+2. Create output files in the current working directory
+3. Automatically resolve paths to the Oracle client and wallet
+
+Example:
+
+```bash
+# From a different directory with its own .env file
+cd /path/to/another/project
+python3 /path/to/oracle-wsk-demo/pull_views_to_sql_files.py
+```
