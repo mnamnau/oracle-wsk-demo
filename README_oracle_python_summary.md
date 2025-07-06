@@ -1,21 +1,32 @@
+## Work Process
 
-# Postup práce
+I created an Oracle Cloud Database (Free Tier), used SQL Developer to create tables, insert dummy data, and build a view.
 
-- Založila jsem **Oracle Cloud DB (Free Tier)**, přes SQL Developer vytvořila tabulky, vložila dummy data a vytvořila view.
-- SQL skripty jsem uložila do **GitHub repozitáře**.
-  - Repozitář jsem inicializovala pomocí `git init`, napojila na GitHub a pushnula pomocí CLI.
-- Vytvořila jsem **Python skript pro připojení k DB pomocí `oracledb`**.
-  - **Problém:**
-    - Thin klient nefungoval (nepodporuje wallet – autentizační balíček)
-    - Musela jsem přejít na thick klient (Oracle Instant Client)
-    - Při použití thick režimu ale Oracle ignoroval moji složku s walletem → hledal `tnsnames.ora` ve výchozím `network/admin`
-      - Vyřešeno pomocí `os.environ["TNS_ADMIN"] = wallet_location`
+I saved the SQL scripts to a GitHub repository.
 
-- **Klíčový bod:** `cursor` mi ukázal konkrétní chybu a díky tomu jsem během 5 minut vyřešila to, co bez kurzoru nešlo hodinu odhalit.  
-  `Cursor` „zná kontext“ a zobrazí skutečnou odpověď databáze.
+The repository was initialized using `git init`, connected to GitHub, and pushed via the CLI.
 
-## Výsledek
+I also created a Python script to connect to the database using the `oracledb` library.
 
-- Skript funguje s walletem v thick režimu
-- Připojení, dotaz i výpis dat fungují
-- Celý postup si můžu snadno zopakovat nebo předat dál
+---
+
+## Problem
+
+- The thin client didn’t work (it doesn't support the wallet – the authentication package).
+- I had to switch to the thick client (Oracle Instant Client).
+- However, when using the thick mode, Oracle ignored my wallet folder and looked for `tnsnames.ora` in the default `network/admin` directory.
+- I solved this by setting:
+
+  ```python
+  os.environ["TNS_ADMIN"] = wallet_location
+
+###  Key Point
+> The `cursor` object showed the **specific error**, which helped me resolve the issue in **5 minutes** — something I couldn't figure out for over an hour without it.  
+> The cursor *“knows the context”* and displays the **actual database response**.
+
+
+## Result
+
+-  The Python script works with the wallet in **thick mode**
+-  **Connection**, **SQL query**, and **data output** are all functioning correctly
+-  The entire process is **reproducible** and can be easily **shared** or **reused**
