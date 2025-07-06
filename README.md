@@ -95,12 +95,6 @@
   ORACLE_CLIENT_PATH="path/to/instantclient"
   ```
 
-- Alternatively, you can use the setup_env.sh script (Mac/Linux) to automatically set the path to the Oracle Instant Client:
-
-  ```bash
-  chmod +x setup_env.sh
-  ./setup_env.sh
-  ```
 
 ### 5. Run SQL Queries
 
@@ -112,6 +106,9 @@ venv\Scripts\activate
 
 # Run the script with an SQL file
 python execute_sql_file.py select_join_table.sql
+(1, 'Anna', 'Nováková', 'Databáze')
+(1, 'Anna', 'Nováková', 'Statistika')
+(2, 'Petr', 'Svoboda', 'Databáze')
 ```
 
 #### Mac/Linux
@@ -120,3 +117,6 @@ python execute_sql_file.py select_join_table.sql
 # Use the prepared script
 chmod +x run_sql.sh
 ./run_sql.sh select_join_table.sql
+(1, 'Anna', 'Nováková', 'Databáze')
+(1, 'Anna', 'Nováková', 'Statistika')
+(2, 'Petr', 'Svoboda', 'Databáze')
