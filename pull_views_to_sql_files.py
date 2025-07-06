@@ -10,7 +10,7 @@ initialize_oracle_client()
 connection = get_connection()
 
 # Create views directory if it doesn't exist
-views_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "views")
+views_dir = os.path.join(os.getcwd(), "views")
 pathlib.Path(views_dir).mkdir(exist_ok=True)
 print(f"Views will be saved to: {views_dir}")
 

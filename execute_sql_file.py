@@ -20,6 +20,10 @@ if len(sys.argv) < 2:
 # Get SQL file path from command line arguments
 sql_file_path = sys.argv[1]
 
+# If the path is relative, make it absolute from the current working directory
+if not os.path.isabs(sql_file_path):
+    sql_file_path = os.path.abspath(os.path.join(os.getcwd(), sql_file_path))
+
 # Read SQL from file
 try:
     with open(sql_file_path, 'r') as sql_file:

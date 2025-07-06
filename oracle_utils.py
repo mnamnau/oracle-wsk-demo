@@ -5,14 +5,18 @@ import sys
 
 def initialize_oracle_client():
     """Initialize the Oracle client using the path from environment variables."""
-    # Load environment variables first
-    dotenv.load_dotenv()
+    # Load environment variables from the current working directory
+    dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), '.env'))
     
     # Get Oracle client path from environment variables
     oracle_client_path = os.getenv("ORACLE_CLIENT_PATH")
     if not oracle_client_path:
         print("Error: ORACLE_CLIENT_PATH not set in .env file")
         sys.exit(1)
+        
+    # If the path is relative, make it absolute from the current working directory
+    if not os.path.isabs(oracle_client_path):
+        oracle_client_path = os.path.abspath(os.path.join(os.getcwd(), oracle_client_path))
 
     # Initialize Oracle client with path from .env
     try:
@@ -29,8 +33,8 @@ def get_connection():
     Returns:
         oracledb.Connection: An active Oracle database connection
     """
-    # Load environment variables if not already loaded
-    dotenv.load_dotenv()
+    # Load environment variables from the current working directory if not already loaded
+    dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), '.env'))
     
     # Get connection credentials
     user = os.getenv("DB_USER")
@@ -76,12 +80,34 @@ def get_connection():
             print("Error: TNS_NAME must be set for wallet-based connection")
             sys.exit(1)
         
-        # Define wallet_location using the correct directory name
-        wallet_location = "./Wallet"
+        # Get wallet location from environment variables with fallbacks
+        # First check for TNS_ADMIN in env, then WALLET_LOCATION, then default to ./Wallet
+        wallet_location = os.getenv("TNS_ADMIN") or os.getenv("WALLET_LOCATION") or "./Wallet"
+        
+        # If the path is relative, make it absolute from the current working directory
+        if not os.path.isabs(wallet_location):
+            wallet_location = os.path.abspath(os.path.join(os.getcwd(), wallet_location))
+        
+        # Check if the wallet directory exists
+        if not os.path.isdir(wallet_location):
+            # Try looking in the Oracle client directory for network/admin
+            network_admin_path = os.path.join(oracle_client_path, "network", "admin")
+            if os.path.isdir(network_admin_path):
+                wallet_location = network_admin_path
+            else:
+                print(f"Warning: Wallet directory not found at {wallet_location}")
+                print(f"Checking if tnsnames.ora exists in {wallet_location}")
+        
+        # Check if tnsnames.ora exists in the wallet location
+        tnsnames_path = os.path.join(wallet_location, "tnsnames.ora")
+        if not os.path.isfile(tnsnames_path):
+            print(f"Warning: tnsnames.ora not found at {tnsnames_path}")
+            print(f"TNS_NAME={tns_name} may not be resolved correctly")
         
         # Set TNS_ADMIN environment variable to point to the wallet directory
         # This is needed for the Oracle client to find the wallet
         os.environ["TNS_ADMIN"] = wallet_location
+        print(f"Using TNS_ADMIN: {wallet_location}")
         
         # Connect using wallet
         try:
