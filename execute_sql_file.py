@@ -27,10 +27,10 @@ wallet_password = os.getenv("DB_WALLET_PASSWORD")
 
 
 # Připojení přes mTLS (wallet)
-tns_name = "gitdemo_high"
+tns_name = os.getenv("TNS_NAME")
 
 # Define wallet_location using the correct directory name
-wallet_location = "./Wallet_gitdemo"
+wallet_location = "./Wallet"
 
 # Set TNS_ADMIN environment variable to point to the wallet directory
 # This is needed for the Oracle client to find the wallet
