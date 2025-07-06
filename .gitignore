@@ -4,3 +4,4 @@ __pycache__/
 Wallet*
 wallet*
 .DS_Store
+instantclient
