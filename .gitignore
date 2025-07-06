@@ -1,4 +1,6 @@
 .env
 *.pyc
 __pycache__/
-Wallet_DEMO/*
+Wallet*
+wallet*
+.DS_Store
