@@ -53,7 +53,7 @@ try:
             file_path = os.path.join(views_dir, f"{view_name.lower()}.sql")
             
             # Write DDL to file
-            with open(file_path, 'w') as f:
+            with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(view_ddl)
             
             print(f"Saved view DDL to: {file_path}")
